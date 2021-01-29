@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>複利計算</title>
+</head>
+<body>
+    <div class="container">
+        <h1>計算値</h1>
+        <table>
+            <tr>
+                <th>もと：</th>
+                <td><input type="text" value="10000" id="stack">　円</td>
+            </tr>
+            <tr>
+                <th>福利：</th>
+                <td><input type="text" value="4" id="welfare"> ％</td>
+            </tr>
+            <tr>
+                <th>税金：</th>
+                <td><input type="text" value="20" id="tax"> ％</td>
+            </tr>
+            <tr>
+                <th>年数：</th>
+                <td><input type="text" value="5" id="year"> 年</td>
+            </tr>
+        </table>
+        <button id="calc">計算！</button>
+        <h1>結果</h1>
+        <div><span id="re-year"></span>年後； <span id="result"></span> 円</div>
+    </div>
+    <script>
+        'use strict';
+        var calcButton = document.getElementById('calc');
+        
+        calcButton.addEventListener('click', function () {
+            var welfare = document.getElementById('welfare').value * 1;
+            var tax = document.getElementById('tax').value * 1;
+            var year = document.getElementById('year').value * 1;
+            var inp = {'stack': document.getElementById('stack').value * 1}
+            for (let i = 0; i < year; i++) {
+                let plus = inp.stack * (1 + welfare / 100) - inp.stack;
+                plus *= (1 - (tax / 100));
+                inp.stack += plus;
+            }
+            var re = Math.floor(inp.stack);
+            document.getElementById('re-year').textContent = year;
+            document.getElementById('result').textContent = re;
+        });
+    </script>
+</body>
+</html>
